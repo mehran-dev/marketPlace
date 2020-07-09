@@ -1,0 +1,10 @@
+.ModifyProduct{
+    background-color: yellow;
+}
+
+.newColName{
+    outline: none;
+    border: 1px solid #123;
+background-color: transparent;
+
+}

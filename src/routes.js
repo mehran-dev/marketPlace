@@ -35,6 +35,7 @@ import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
+import Product from './views/Product/Product';
 
 const dashboardRoutes = [
   {
@@ -44,6 +45,14 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DashboardPage,
     layout: "/admin"
+  },
+  {
+    path: "/prods",
+    name: "Products",
+    rtlName: "محصولات",
+    icon: Dashboard,
+    component: Product,
+    layout: "/rtl"
   },
   {
     path: "/user",
