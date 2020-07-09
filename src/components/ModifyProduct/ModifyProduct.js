@@ -2,25 +2,20 @@ import React, { Component } from "react";
 
 import css from "./ModifyProduct.module.css";
 import Button from "../../components/CustomButtons/Button";
-import CustomInput from '../../components/CustomInput/CustomInput';
-
+import CustomInput from "../../components/CustomInput/CustomInput";
 
 export default class ModifyProduct extends Component {
   state = {
+    sellerName: "Loged in User !",
     productName: "",
-    rows: 1,
+    newColumnAdding: false,
+    rows: 3,
     columns: ["قیمت", "موجودی", "وزن"],
 
     data: [{}],
   };
 
-  componentDidMount() {
-    /* for (let row = 1 ;row<=this.state.rows;row++){
-    //console.log(row+"__1");
-    
-    document.getElementById(row+"__1").value= "فروشنده لاگین شده ";
-} */
-  }
+  componentDidMount() {}
 
   addCol = (colName) => {
     let isDuplicate = false;
@@ -68,6 +63,12 @@ export default class ModifyProduct extends Component {
     });
   };
 
+  showSddNewColumnHandler = () => {
+    this.setState({
+      newColumnAdding: true,
+    });
+  };
+
   render() {
     let rows = [];
     const theads = this.state.columns.map((h) => {
@@ -87,26 +88,43 @@ export default class ModifyProduct extends Component {
 
     return (
       <React.Fragment>
-        <h3>نیاز به افزودن ویزگی جدیدی دارم</h3>
-        <Button>افرودن ویرگی جدید</Button>
-        <h3>
-    
-          <input className={css.newColName} id="newColName" />
-          را به عنوان ویژکی جدید اضافه کن . 
-          <button
-            onClick={() =>
-              this.addCol(document.getElementById("newColName").value)
-            }
-          >
-            اضافه کردن
-          </button>
-        </h3>
-        <h3>
-          اضافه کردن محصول جدید
-          <button onClick={this.addNewRow}>افزودن</button>
-        </h3>
+       { !this.state.newColumnAdding&&
+     <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
+     <h5 className={css.title}>آیا نیاز به افزودن ویزگی جدیدی دارید ؟</h5>
+     <Button onClick={this.showSddNewColumnHandler} color="rose">
+       افرودن ویرگی جدید
+     </Button>
+   </div>
+       }
+
+       {
+this.state.newColumnAdding&&
+<div className={css.customRoundStyle}>
+          <h5>
+            <input
+              className={css.newColName}
+              id="newColName"
+              placeholder="ویژگی مورد نظر"
+            />
+            را به عنوان ویژکی های موجود اضافه کن .
+            <Button
+              color="warning"
+              onClick={() =>
+                this.addCol(document.getElementById("newColName").value)
+              }
+            >
+              اضافه کردن
+            </Button>
+          </h5>
+        </div>
+       }
+   
+        
         <div className={css.container}>
-          <span> محصول در حال ویزایش :{this.props.productName}</span>
+                               
+          <span className={css.customRoundStyle2}> محصول در حال ویزایش :{this.props.productName}</span>
+          <span className={css.customRoundStyle2}> نام فروشنده    :{this.state.sellerName}</span>
+        
           <div className="container">
             <table>
               <thead>
@@ -116,14 +134,16 @@ export default class ModifyProduct extends Component {
                 {rows.map((r) => {
                   return <tr key={Math.random()}>{r}</tr>;
                 })}
-                <tr key="LastRow" > 
-                <button onClick={this.addNewRow}>افزودن</button>
+                <tr>
+                  <td>
+                    <button onClick={this.addNewRow}>افزودن</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <Button> My bytton </Button>
+        <Button color="success"> ذخیره </Button>
       </React.Fragment>
     );
   }

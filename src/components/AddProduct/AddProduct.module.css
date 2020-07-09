@@ -1,3 +1,19 @@
 .AddProduct{
-    background-color: yellowgreen;
+  /*   background-color: rgb(192, 194, 188); */
+    box-shadow: 0px 0px 3px #e154ee;
+    padding: 12px 16px;
+border-radius: 3px;
+
+
+
+
+}
+
+
+.title{
+display: inline;
+}
+.AutoCompelete{
+    width: 10px;
+    height: 10px;
 }

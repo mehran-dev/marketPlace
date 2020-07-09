@@ -1,10 +1,53 @@
-.ModifyProduct{
-    background-color: yellow;
+.ModifyProduct {
+  background-color: yellow;
 }
 
-.newColName{
-    outline: none;
-    border: 1px solid #123;
-background-color: transparent;
+.newColName {
+  outline: none;
 
+  border: 2px solid transparent;
+  border-bottom-color: #999;
+  background-color: transparent;
+  margin: 0 12px;
+  line-height: 1.8;
+  border-radius: 3px;
+}
+
+.newColName:active,
+.newColName:focus {
+  border-color: #999;
+}
+.container {
+  overflow: scroll;
+  padding: 3px 8px;
+  border: 2px solid #a5a5a5;
+  margin: 6px;
+  margin-top: 16px;
+  box-shadow: 1px 1px 1px rgb(145, 145, 145);
+  border-radius: 3px;
+}
+.flxContainer {
+  display: flex;
+  justify-content: space-around;
+  align-content: space-between;
+  align-items: baseline;
+  
+}
+
+.customRoundStyle {
+  box-shadow: 0px 0px 3px #e154ee;
+  padding: 8px 16px;
+  border-radius: 3px;
+  margin: 12px auto;
+}
+
+
+.customRoundStyle2{
+    border-radius: 30px;
+    padding: 3px 10px;
+    border-bottom: 2px solid  #7db486 ;
+    border-top: 2px solid  #7db486 ;
+    display: inline-block;
+    margin: 6px 12px;
+   
 }

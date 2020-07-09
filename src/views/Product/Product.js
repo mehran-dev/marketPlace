@@ -4,12 +4,19 @@ import ModifyProduct from "../../components/ModifyProduct/ModifyProduct";
 import css from "./Product.module.css";
 
 export default class Product extends Component {
-  state = {};
+  state = {
+      userProduct:''
+  };
+
+getUserProduct=(evt)=>{
+    alert(evt.target.value);
+}
+
   render() {
     return (
       <div>
-        Product page
-        <AddProduct />
+    
+        <AddProduct clicked={this.getUserProduct}/>
         <ModifyProduct />
       </div>
     );

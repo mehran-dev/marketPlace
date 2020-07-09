@@ -9,7 +9,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 
-export default function AddProduct() {
+export default function AddProduct(props) {
 
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
@@ -43,12 +43,14 @@ const top100Films = [
 
 
 
-            <h3>
+            <h5 className={css.title}>
 محصول مورد نظر خود را وارد کنید.
-            </h3>
+            </h5>
             
             <Autocomplete
+        
       id="UserProduct"
+      onChange={(e)=>props.clicked(e)}
       options={top100Films}
       getOptionLabel={(option) => option.title}
       style={{ width: 300 }}
