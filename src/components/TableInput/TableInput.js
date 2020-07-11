@@ -9,13 +9,13 @@ function TableInput(props) {
     <input
       id={props.id}
       onChange={() => {
-        console.log("line 11 classes", classes);
+        // console.log("line 11 classes", classes);
         if (classes.includes(css.touched)) {
           console.log("Entered in includes");
         } else {
           classes.push(css.touched);
         }
-        console.log("line 17 classes", classes.join(" "));
+        // console.log("line 17 classes", classes.join(" "));
       }}
       placeholder={props.placeHolder}
       className={classes.join(" ")}

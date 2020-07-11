@@ -15,7 +15,24 @@ export default class ModifyProduct extends Component {
     data: [{}],
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    function stringToHash(string) {
+      let char;
+      var hash = 0;
+
+      if (string.length == 0) return hash;
+
+      for (let i = 0; i < string.length; i++) {
+        char = string.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;
+      }
+
+      return hash;
+    }
+
+    console.log("Dowe have any Hash??", stringToHash("gfg"));
+  }
   componentDidUpdate(prevProps, prevState) {
     console.log("CDU");
   }
@@ -108,7 +125,7 @@ export default class ModifyProduct extends Component {
 
         <div className={css.container}>
           <span className={css.customRoundStyle2}>
-            محصول در حال ویزایش :{this.props.userEditingProduct}
+            محصول در حال ویرایش :{this.props.userEditingProduct}
           </span>
           <span className={css.customRoundStyle2}>
             نام فروشنده :{this.props.sellerName}
@@ -136,9 +153,9 @@ export default class ModifyProduct extends Component {
 
         {!this.state.newColumnAdding && (
           <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
-            <h5 className={css.title}>نیاز به افزودن ویزگی جدیدی دارم.</h5>
+            <h5 className={css.title}>نیاز به افزودن وی‍رگی جدیدی دارم.</h5>
             <Button onClick={this.showAddNewColumnHandler} color="rose">
-              افرودن ویرگی جدید
+              افرودن ویزگی جدید
             </Button>
           </div>
         )}
