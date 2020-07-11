@@ -5,11 +5,11 @@ import ModifyProduct from "../../components/ModifyProduct/ModifyProduct";
 //import JustTesting from "../../components/JustTesting/JustTesting";
 export default class Product extends Component {
   state = {
-    userProduct: "",
+    userNewProduct: "محصول در حال ویرایش",
     sellerName: "کاربر لاگین شده .",
     userProductAlreadyExisted: true,
     existingProducts: ["شیشه", "عینک", "سبد", "میوه", "کلاه"],
-    existingSubProducts: ["دودی", "سبز", "بنفش", "فوتو"],
+    existingSubProducts: [{}, {}, {}, {}],
   };
 
   getUserProduct = (evt) => {
@@ -19,11 +19,15 @@ export default class Product extends Component {
   render() {
     return (
       <div>
-        <AddProduct clicked={this.getUserProduct} />
-        <ModifyProduct
+        <AddProduct
           seggests={this.state.existingProducts}
-          subProducts={this.state.subProducts}
+          clicked={this.getUserProduct}
+        />
+        <ModifyProduct
+          subProducts={this.state.existingSubProducts}
           userProductAlreadyExisted={this.state.userProductAlreadyExisted}
+          sellerName={this.state.sellerName}
+          userEditingProduct={this.state.userNewProduct}
         />
       </div>
     );

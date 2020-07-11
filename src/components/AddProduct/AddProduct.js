@@ -25,8 +25,8 @@ export default function AddProduct(props) {
 
   useEffect(() => {
     setTimeout(() => {
-      SetSeggesstions(top100Films);
-    }, 15000);
+      SetSeggesstions(props.seggests);
+    }, 1000);
   });
 
   const [value, setValue] = useState(null);

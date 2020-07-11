@@ -3,19 +3,22 @@ import React, { Component } from "react";
 import css from "./ModifyProduct.module.css";
 import Button from "../../components/CustomButtons/Button";
 //import CustomInput from "../../components/CustomInput/CustomInput";
-
+import TableInput from "../../components/TableInput/TableInput";
 export default class ModifyProduct extends Component {
   state = {
     sellerName: "Loged in User !",
     productName: "",
     newColumnAdding: false,
-    rows: 3,
+    rows: this.props.subProducts.length - 1,
     columns: ["قیمت", "موجودی", "وزن"],
 
     data: [{}],
   };
 
   componentDidMount() {}
+  componentDidUpdate(prevProps, prevState) {
+    console.log("CDU");
+  }
 
   addCol = (colName) => {
     let isDuplicate = false;
@@ -38,32 +41,41 @@ export default class ModifyProduct extends Component {
     }
 
     const oldColumns = [...this.state.columns];
-    /*    console.log(oldColumns);
-   
-           console.log(oldColumns.length - 3); */
     //splice doent return new array !!!
     oldColumns.splice(-3, 0, colName);
-    /* console.log(newColumns);
-     */
+
     this.setState({
       //splice doent return new array !!!
       columns: oldColumns, //newColumns
+      newColumnAdding: false,
     });
-    /*        setTimeout(() => {
-                   console.log(this.state.columns);
-       
-               }, 2000) */
+    alert("ویژگی جدید اضافه شد " + " :" + colName);
   };
 
   addNewRow = () => {
-    this.setState((prevState) => {
-      return {
-        rows: prevState.rows + 1,
-      };
+    let NeedTobeAdded;
+    const lastRow = this.state.rows + 1;
+    this.state.columns.map((c, index) => {
+      console.log(lastRow + "__" + (index + 1));
+      if (
+        document.getElementById(lastRow + "__" + (index + 1)).value.trim() !==
+        ""
+      ) {
+        NeedTobeAdded = true;
+      }
     });
+    if (!NeedTobeAdded) {
+      alert("آخرین ردیف شما هنوز خالیست !!");
+    } else {
+      this.setState((prevState) => {
+        return {
+          rows: prevState.rows + 1,
+        };
+      });
+    }
   };
 
-  showSddNewColumnHandler = () => {
+  showAddNewColumnHandler = () => {
     this.setState({
       newColumnAdding: true,
     });
@@ -80,7 +92,11 @@ export default class ModifyProduct extends Component {
         return (
           <td /* className={css.hoverPlus} */ key={j + Math.random(j)}>
             {" "}
-            <input className={css.bgGrey} id={j + 1 + "__" + (index + 1)} />
+            <TableInput
+              className={css.bgGrey}
+              placeHolder="مقدار جدیدی را وارد کنید "
+              id={j + 1 + "__" + (index + 1)}
+            />
           </td>
         );
       });
@@ -89,12 +105,39 @@ export default class ModifyProduct extends Component {
     return (
       <React.Fragment>
         <button className={css.hoverPlus}>testing</button>
+
+        <div className={css.container}>
+          <span className={css.customRoundStyle2}>
+            محصول در حال ویزایش :{this.props.userEditingProduct}
+          </span>
+          <span className={css.customRoundStyle2}>
+            نام فروشنده :{this.props.sellerName}
+          </span>
+
+          <div className="container">
+            <table>
+              <thead>
+                <tr>{theads}</tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => {
+                  return <tr key={Math.random()}>{r}</tr>;
+                })}
+                <tr>
+                  <td>
+                    <button onClick={this.addNewRow}>افزودن</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <Button color="success"> ذخیره </Button>
+
         {!this.state.newColumnAdding && (
           <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
-            <h5 className={css.title}>
-              آیا نیاز به افزودن ویزگی جدیدی دارید ؟
-            </h5>
-            <Button onClick={this.showSddNewColumnHandler} color="rose">
+            <h5 className={css.title}>نیاز به افزودن ویزگی جدیدی دارم.</h5>
+            <Button onClick={this.showAddNewColumnHandler} color="rose">
               افرودن ویرگی جدید
             </Button>
           </div>
@@ -120,34 +163,6 @@ export default class ModifyProduct extends Component {
             </h5>
           </div>
         )}
-
-        <div className={css.container}>
-          <span className={css.customRoundStyle2}>
-            محصول در حال ویزایش :{this.props.productName}
-          </span>
-          <span className={css.customRoundStyle2}>
-            نام فروشنده :{this.state.sellerName}
-          </span>
-
-          <div className="container">
-            <table>
-              <thead>
-                <tr>{theads}</tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => {
-                  return <tr key={Math.random()}>{r}</tr>;
-                })}
-                <tr>
-                  <td>
-                    <button onClick={this.addNewRow}>افزودن</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <Button color="success"> ذخیره </Button>
       </React.Fragment>
     );
   }
