@@ -5,7 +5,7 @@
 .newColName {
   outline: none;
 
-  border: 2px solid transparent;
+  border: 2px solid rgba(204, 204, 204, 0.582);
   border-bottom-color: #999;
   background-color: transparent;
   margin: 0 12px;
@@ -15,6 +15,9 @@
 
 .newColName:active,
 .newColName:focus {
+  border-color: #999;
+}
+.newColName:empty() {
   border-color: #999;
 }
 .container {
@@ -31,23 +34,49 @@
   justify-content: space-around;
   align-content: space-between;
   align-items: baseline;
-  
 }
 
 .customRoundStyle {
-  box-shadow: 0px 0px 3px #e154ee;
+  box-shadow: 0px 0px 3px #bbbbbb;
   padding: 8px 16px;
   border-radius: 3px;
   margin: 12px auto;
 }
 
+.customRoundStyle2 {
+  border-radius: 30px;
+  padding: 3px 10px;
+  border-bottom: 2px solid #7db486;
+  border-top: 2px solid #7db486;
 
-.customRoundStyle2{
-    border-radius: 30px;
-    padding: 3px 10px;
-    border-bottom: 2px solid  #7db486 ;
-    border-top: 2px solid  #7db486 ;
-    display: inline-block;
-    margin: 6px 12px;
-   
+  border-right: 6px solid #7db486;
+  border-left: 6px solid #7db486;
+  display: inline-block;
+  margin: 6px 12px;
+}
+.hoverPlus:hover {
+  background-color: thistle;
+}
+.hoverPlus:hover::before {
+  content: "+";
+  background-color: blue;
+  border-radius: 120px;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  opacity: 1;
+}
+.hoverPlus::before {
+  content: "+";
+  background-color: blue;
+  border-radius: 120px;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  opacity: 0;
+}
+.bgGrey {
+  background-color: rgba(216, 216, 216, 0.651);
+  border-radius: 3px;
+  border: 1px solid #bbb;
 }

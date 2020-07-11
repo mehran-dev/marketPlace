@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import css from "./ModifyProduct.module.css";
 import Button from "../../components/CustomButtons/Button";
-import CustomInput from "../../components/CustomInput/CustomInput";
+//import CustomInput from "../../components/CustomInput/CustomInput";
 
 export default class ModifyProduct extends Component {
   state = {
@@ -78,9 +78,9 @@ export default class ModifyProduct extends Component {
     for (let j = 0; j <= this.state.rows; j++) {
       rows[j] = this.state.columns.map((col, index) => {
         return (
-          <td key={j + Math.random(j)}>
+          <td /* className={css.hoverPlus} */ key={j + Math.random(j)}>
             {" "}
-            <input id={j + 1 + "__" + (index + 1)} />
+            <input className={css.bgGrey} id={j + 1 + "__" + (index + 1)} />
           </td>
         );
       });
@@ -88,43 +88,47 @@ export default class ModifyProduct extends Component {
 
     return (
       <React.Fragment>
-       { !this.state.newColumnAdding&&
-     <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
-     <h5 className={css.title}>آیا نیاز به افزودن ویزگی جدیدی دارید ؟</h5>
-     <Button onClick={this.showSddNewColumnHandler} color="rose">
-       افرودن ویرگی جدید
-     </Button>
-   </div>
-       }
-
-       {
-this.state.newColumnAdding&&
-<div className={css.customRoundStyle}>
-          <h5>
-            <input
-              className={css.newColName}
-              id="newColName"
-              placeholder="ویژگی مورد نظر"
-            />
-            را به عنوان ویژکی های موجود اضافه کن .
-            <Button
-              color="warning"
-              onClick={() =>
-                this.addCol(document.getElementById("newColName").value)
-              }
-            >
-              اضافه کردن
+        <button className={css.hoverPlus}>testing</button>
+        {!this.state.newColumnAdding && (
+          <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
+            <h5 className={css.title}>
+              آیا نیاز به افزودن ویزگی جدیدی دارید ؟
+            </h5>
+            <Button onClick={this.showSddNewColumnHandler} color="rose">
+              افرودن ویرگی جدید
             </Button>
-          </h5>
-        </div>
-       }
-   
-        
+          </div>
+        )}
+
+        {this.state.newColumnAdding && (
+          <div className={css.customRoundStyle}>
+            <h5>
+              <input
+                className={css.newColName}
+                id="newColName"
+                placeholder="ویژگی مورد نظر"
+              />
+              را به ویژکی های موجود اضافه کن .
+              <Button
+                color="warning"
+                onClick={() =>
+                  this.addCol(document.getElementById("newColName").value)
+                }
+              >
+                اضافه کردن
+              </Button>
+            </h5>
+          </div>
+        )}
+
         <div className={css.container}>
-                               
-          <span className={css.customRoundStyle2}> محصول در حال ویزایش :{this.props.productName}</span>
-          <span className={css.customRoundStyle2}> نام فروشنده    :{this.state.sellerName}</span>
-        
+          <span className={css.customRoundStyle2}>
+            محصول در حال ویزایش :{this.props.productName}
+          </span>
+          <span className={css.customRoundStyle2}>
+            نام فروشنده :{this.state.sellerName}
+          </span>
+
           <div className="container">
             <table>
               <thead>

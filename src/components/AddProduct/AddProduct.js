@@ -1,63 +1,115 @@
-import React from 'react'
-import css from './AddProduct.module.css';
-
-
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-
-
-
-
+import React, { useState, useEffect } from "react";
+import css from "./AddProduct.module.css";
+import Button from "../../components/CustomButtons/Button";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete, {
+  createFilterOptions,
+} from "@material-ui/lab/Autocomplete";
 
 export default function AddProduct(props) {
+  // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+  const top100Films = [
+    { title: "The Shawshank Redemption", year: 1994 },
+    { title: "The Godfather", year: 1972 },
+    { title: "The Godfather: Part II", year: 1974 },
+  ];
+  const continueAddingProccess = () => {
+    const newUserProduct = document.getElementById("userProduct").value;
+    if (newUserProduct.trim() === "") {
+      alert("No value is Entered ");
+    } else {
+      alert("ur val of Choice Now is " + newUserProduct);
+    }
+  };
+  const [seggestions, SetSeggesstions] = useState([]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      SetSeggesstions(top100Films);
+    }, 15000);
+  });
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-  { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  { title: 'The Lord of the Rings: The Two Towers', year: 2002 },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 },
-  { title: 'Seven Samurai', year: 1954 },
-  { title: 'Star Wars: Episode IV - A New Hope', year: 1977 },
-  { title: 'City of God', year: 2002 },
-]
+  const [value, setValue] = useState(null);
 
+  const filter = createFilterOptions();
 
-    return (
-        <div className={css.AddProduct}>
+  return (
+    <div className={css.AddProduct}>
+      <h5 className={css.title}>محصول مورد نظر خود را وارد کنید.</h5>
 
+      <Autocomplete
+        classes={css.Autocomplete}
+        id="userProduct"
+        freeSolo
+        // onChange={(e) => console.log("onChange e:", e.target.value)}
+        onChange={(event, newValue) => {
+          if (typeof newValue === "string") {
+            setValue({
+              title: newValue,
+            });
+          } else if (newValue && newValue.inputValue) {
+            // Create a new value from the user input
+            setValue({
+              title: newValue.inputValue,
+            });
+          } else {
+            setValue(newValue);
+          }
+        }}
+        onFocus={(e) => {
+          console.log("onFocuse e:", e.target.value);
+        }}
+        onClose={(e) => console.log("onClose e:", e.target.value)}
+        onKeyPress={(e) => {
+          console.log("onKeyPress e:", e.target.value);
+        }}
+        options={seggestions}
+        /*       getOptionLabel={(seggestions) => seggestions.title}
+         */ getOptionLabel={(option) => {
+          // Value selected with enter, right from the input
+          if (typeof option === "string") {
+            return option;
+          }
+          // Add "xxx" option created dynamically
+          if (option.inputValue) {
+            return option.inputValue;
+          }
+          // Regular option
+          return option.title;
+        }}
+        style={{}}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="محصول جدید را وارد کنید"
+            variant="outlined"
+          />
+        )}
+        autoHighlight
+        selectOnFocus
+        handleHomeEndKeys
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
 
+          // Suggest the creation of a new value
+          if (params.inputValue !== "") {
+            filtered.push({
+              inputValue: params.inputValue,
+              title: ` " افزودن:"${params.inputValue}`,
+            });
+          }
 
-            <h5 className={css.title}>
-محصول مورد نظر خود را وارد کنید.
-            </h5>
-            
-            <Autocomplete
-        
-      id="UserProduct"
-      onChange={(e)=>props.clicked(e)}
-      options={top100Films}
-      getOptionLabel={(option) => option.title}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="محصول جدید را وارد کنید" variant="outlined" />}
-    />
+          return filtered;
+        }}
+      />
 
-
-        </div>
-    )
+      <Button
+        style={{ width: "50%", margin: "16px auto" }}
+        onClick={() => continueAddingProccess()}
+        color="info"
+      >
+        ادامه
+      </Button>
+    </div>
+  );
 }

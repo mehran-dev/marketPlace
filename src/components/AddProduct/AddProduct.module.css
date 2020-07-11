@@ -1,19 +1,16 @@
-.AddProduct{
+.AddProduct {
   /*   background-color: rgb(192, 194, 188); */
-    box-shadow: 0px 0px 3px #e154ee;
-    padding: 12px 16px;
-border-radius: 3px;
-
-
-
-
+  box-shadow: 0px 0px 3px #adabad;
+  padding: 12px 16px;
+  border-radius: 3px;
+  text-align: center;
 }
 
-
-.title{
-display: inline;
+.title {
+  display: inline-block;
+  margin-bottom: 18px;
 }
-.AutoCompelete{
-    width: 10px;
-    height: 10px;
+.AutoCompelete {
+  direction: rtl;
+  text-align: right;
 }
