@@ -5,11 +5,11 @@ import ModifyProduct from "../../components/ModifyProduct/ModifyProduct";
 //import JustTesting from "../../components/JustTesting/JustTesting";
 export default class Product extends Component {
   state = {
-    userNewProduct: "محصول در حال ویرایش",
-    sellerName: "کاربر لاگین شده .",
+    userNewProduct: "محصول  شماره ۱  ",
+    sellerName: "فروشنده لاگین شده .",
     userProductAlreadyExisted: true,
-    existingProducts: ["شیشه", "عینک", "سبد", "میوه", "کلاه"],
-    existingSubProducts: [{}, {}, {}, {}],
+    existingProducts: ["کفش", "عینک", "سبد", "میوه", "کلاه"],
+    existingSubProducts: [],
   };
 
   getUserProduct = (evt) => {

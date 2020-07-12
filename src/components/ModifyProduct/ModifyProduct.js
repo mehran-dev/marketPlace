@@ -4,37 +4,79 @@ import css from "./ModifyProduct.module.css";
 import Button from "../../components/CustomButtons/Button";
 //import CustomInput from "../../components/CustomInput/CustomInput";
 import TableInput from "../../components/TableInput/TableInput";
+import { object } from "prop-types";
+
 export default class ModifyProduct extends Component {
   state = {
     sellerName: "Loged in User !",
     productName: "",
     newColumnAdding: false,
-    rows: this.props.subProducts.length - 1,
+    rows: 1,
     columns: ["قیمت", "موجودی", "وزن"],
 
     data: [{}],
   };
+  stringToHash = (string) => {
+    let char;
+    var hash = 0;
 
-  componentDidMount() {
-    function stringToHash(string) {
-      let char;
-      var hash = 0;
+    if (string.length == 0) return hash;
 
-      if (string.length == 0) return hash;
-
-      for (let i = 0; i < string.length; i++) {
-        char = string.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-        hash = hash & hash;
-      }
-
-      return hash;
+    for (let i = 0; i < string.length; i++) {
+      char = string.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash = hash & hash;
     }
 
-    console.log("Dowe have any Hash??", stringToHash("gfg"));
+    return hash;
+  };
+
+  //props.subproducts ==> columnNames,,rows,,data
+  extractColumnsAndRowsFromJsonData = () => {
+    let extractedColumnsName = [];
+    let extractedRowsNumber = 0;
+    let lgth = this.props.subProducts.length;
+    let jsonData = this.props.subProducts;
+    console.log(this.props.subProducts);
+
+    const dataKeys = Object.keys(jsonData);
+    //every product in array
+    dataKeys.forEach((key) => {
+      //every key in a single product
+
+      //console.log("Key in Key !!!!", Object.keys(jsonData[key]));
+      Object.keys(jsonData[key]).forEach((e) => {
+        if (extractedColumnsName.includes(e)) {
+          //Ok colName  already Existed
+        } else {
+          extractedColumnsName.push(e);
+        }
+      });
+
+      // console.log("extractedColumn :", extractedColumn);
+
+      //Extracting default columns maybe is an stupid idea ;;...
+      /* defautlColumns=this.state.columns
+defautlColumns.forEach(c=>{
+}) */
+    });
+    //Time to add columns or maybe rows to the state ::=>
+    this.setState({
+      columns: extractedColumnsName,
+      rows: extractedRowsNumber,
+    });
+  };
+
+  componentDidMount() {
+    console.log("Does have any Hash??", this.stringToHash("gfg"));
+    ///this.extractColumnsAndRowsFromJsonData();
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log("CDU");
+    console.log("cdu");
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("scu");
+    return true;
   }
 
   addCol = (colName) => {
@@ -58,7 +100,7 @@ export default class ModifyProduct extends Component {
     }
 
     const oldColumns = [...this.state.columns];
-    //splice doent return new array !!!
+    //splice doesnt return new array !!!
     oldColumns.splice(-3, 0, colName);
 
     this.setState({
@@ -73,10 +115,10 @@ export default class ModifyProduct extends Component {
     let NeedTobeAdded;
     const lastRow = this.state.rows + 1;
     this.state.columns.map((c, index) => {
-      console.log(lastRow + "__" + (index + 1));
       if (
-        document.getElementById(lastRow + "__" + (index + 1)).value.trim() !==
-        ""
+        document
+          .getElementById(lastRow + "__" + this.stringToHash(c))
+          .value.trim() !== ""
       ) {
         NeedTobeAdded = true;
       }
@@ -104,15 +146,14 @@ export default class ModifyProduct extends Component {
       return <th key={h}>{h}</th>;
     });
 
-    for (let j = 0; j <= this.state.rows; j++) {
+    for (let j = 1; j <= this.state.rows; j++) {
       rows[j] = this.state.columns.map((col, index) => {
         return (
           <td /* className={css.hoverPlus} */ key={j + Math.random(j)}>
-            {" "}
             <TableInput
               className={css.bgGrey}
               placeHolder="مقدار جدیدی را وارد کنید "
-              id={j + 1 + "__" + (index + 1)}
+              id={+j + 1 + "__" + this.stringToHash(col)}
             />
           </td>
         );
@@ -125,7 +166,7 @@ export default class ModifyProduct extends Component {
 
         <div className={css.container}>
           <span className={css.customRoundStyle2}>
-            محصول در حال ویرایش :{this.props.userEditingProduct}
+            محصول انتخابی: :{this.props.userEditingProduct}
           </span>
           <span className={css.customRoundStyle2}>
             نام فروشنده :{this.props.sellerName}
@@ -142,7 +183,7 @@ export default class ModifyProduct extends Component {
                 })}
                 <tr>
                   <td>
-                    <button onClick={this.addNewRow}>افزودن</button>
+                    <button onClick={this.addNewRow}>سطر جدید</button>
                   </td>
                 </tr>
               </tbody>

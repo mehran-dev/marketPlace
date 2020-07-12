@@ -1,5 +1,5 @@
 .Input {
-  border: 2px solid #eee;
+  border: 2px solid #eee !important;
   background-color: transparent;
   border-radius: 3px;
   direction: rtl;
@@ -25,4 +25,16 @@
 .touched {
   box-shadow: 0 0 2px red;
   background-color: rgb(0, 119, 230);
+}
+.root {
+  background-color: rgb(211, 7, 7);
+  height: 25px !important;
+}
+.inputRoot {
+  background-color: chartreuse;
+  height: 25px;
+}
+.input {
+  background-color: cornflowerblue;
+  height: 25px !important;
 }

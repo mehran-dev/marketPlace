@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
+//import JustTesting from "../JustTesting/JustTesting";
 
 export default function AddProduct(props) {
   // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
@@ -36,9 +37,21 @@ export default function AddProduct(props) {
   return (
     <div className={css.AddProduct}>
       <h5 className={css.title}>محصول مورد نظر خود را وارد کنید.</h5>
-
       <Autocomplete
-        classes={css.Autocomplete}
+        fullWidth
+        classes={{
+          inputRoot: css.inputRoot,
+          input: css.input,
+          popper: css.popperA,
+          paper: css.paper,
+          listbox: css.listbox,
+          clearIndicator: css.clearIndicator,
+          endAdornment: css.endAdornment,
+          /*  formcontrol: css.formcontrol, Does not Exist in this contex  */
+          root: css.root,
+          input: css.input,
+          label: css.label,
+        }}
         id="userProduct"
         freeSolo
         // onChange={(e) => console.log("onChange e:", e.target.value)}
@@ -77,9 +90,11 @@ export default function AddProduct(props) {
           // Regular option
           return option.title;
         }}
-        style={{}}
         renderInput={(params) => (
           <TextField
+            InputProps={{
+              className: css.inputColor,
+            }}
             {...params}
             label="محصول جدید را وارد کنید"
             variant="outlined"
@@ -102,7 +117,6 @@ export default function AddProduct(props) {
           return filtered;
         }}
       />
-
       <Button
         style={{ width: "50%", margin: "16px auto" }}
         onClick={() => continueAddingProccess()}

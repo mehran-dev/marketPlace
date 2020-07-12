@@ -5,12 +5,56 @@
   border-radius: 3px;
   text-align: center;
 }
-
+.root {
+  background-color: chartreuse;
+  width: 50% !important;
+  margin: 0 auto !important;
+  direction: rtl !important;
+  height: 200px !important;
+}
 .title {
   display: inline-block;
   margin-bottom: 18px;
 }
-.AutoCompelete {
+.inputRoot {
+  color: rgb(255, 255, 255);
   direction: rtl;
   text-align: right;
+  background-color: aquamarine;
+  /*   position: relative;
+  width: 50% !important;
+  margin: 0 auto !important; */
+}
+
+.inputColor {
+  background-color: aquamarine !important;
+}
+.label {
+  top: 6px;
+  background-color: #fff;
+}
+.inputRoot {
+  background-color: rgb(255, 238, 0);
+  height: 25px;
+}
+.popperA {
+  background-color: red;
+}
+.paper {
+  background-color: green;
+}
+.listbox {
+  background-color: chartreuse;
+  direction: rtl;
+}
+.clearIndicator {
+  background-color: coral;
+}
+.endAdornment {
+  background-color: coral;
+}
+
+.input {
+  /*   height: 25px !important;
+ */
 }
