@@ -5,25 +5,24 @@
   border-radius: 3px;
   text-align: center;
 }
+.spinnerHolder{
+width: 12px;
+height: 12px;
+position: relative;
+top: -12px;
+left: -50%;
+}
+
 .root {
   background-color: chartreuse;
   width: 50% !important;
   margin: 0 auto !important;
   direction: rtl !important;
-  height: 200px !important;
+  height: 60px !important;
 }
 .title {
   display: inline-block;
   margin-bottom: 18px;
-}
-.inputRoot {
-  color: rgb(255, 255, 255);
-  direction: rtl;
-  text-align: right;
-  background-color: aquamarine;
-  /*   position: relative;
-  width: 50% !important;
-  margin: 0 auto !important; */
 }
 
 .inputColor {
@@ -34,8 +33,17 @@
   background-color: #fff;
 }
 .inputRoot {
-  background-color: rgb(255, 238, 0);
-  height: 25px;
+ 
+  direction: rtl;
+  text-align: right;
+  background-color: rgb(240, 240, 240);
+  height: 60px;
+  padding: 0 !important;
+}
+.inputRoot > input {
+ 
+
+  background-color: rgb(236, 236, 236);
 }
 .popperA {
   background-color: red;
@@ -49,12 +57,12 @@
 }
 .clearIndicator {
   background-color: coral;
+  display: none !important;
 }
 .endAdornment {
   background-color: coral;
 }
 
 .input {
-  /*   height: 25px !important;
- */
+  height: 25px !important;
 }

@@ -6,7 +6,7 @@
   outline: none;
 
   border: 2px solid rgba(204, 204, 204, 0.582);
-  border-bottom-color: #999;
+
   background-color: transparent;
   margin: 0 12px;
   line-height: 1.8;
@@ -46,11 +46,10 @@
 .customRoundStyle2 {
   border-radius: 30px;
   padding: 3px 10px;
-  border-bottom: 2px solid #7db486;
+   border-bottom: 2px solid #7db486;
   border-top: 2px solid #7db486;
-
-  border-right: 6px solid #7db486;
-  border-left: 6px solid #7db486;
+  border-right: 2px solid #7db486;
+  border-left: 2px solid #7db486;
   display: inline-block;
   margin: 6px 12px;
 }

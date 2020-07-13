@@ -24,17 +24,29 @@
 
 .touched {
   box-shadow: 0 0 2px red;
-  background-color: rgb(0, 119, 230);
+  /*   background-color: rgb(0, 119, 230);
+ */
 }
 .root {
-  background-color: rgb(211, 7, 7);
-  height: 25px !important;
+  /*   background-color: rgb(211, 7, 7);
+ */
+  height: 30px !important;
+  width: 120px !important;
 }
 .inputRoot {
-  background-color: chartreuse;
+  /*   background-color: chartreuse;
+ */
   height: 25px;
+  padding: 0 !important;
 }
-.input {
-  background-color: cornflowerblue;
-  height: 25px !important;
+.inputRoot input {
+  /*   background-color: cornflowerblue;
+ */
+  height: 9px !important;
+}
+.root label {
+  transform: translate(30px, 4px) scale(1);
+}
+.clearIndicator {
+  display: none !important;
 }

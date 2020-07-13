@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import AddProduct from "../../components/AddProduct/AddProduct"; //'../components/AddProduct/AddProduct';
-import ModifyProduct from "../../components/ModifyProduct/ModifyProduct";
+import AddProduct from "../../components/SelectProduct/SelectProduct"; //'../components/AddProduct/AddProduct';
+import SubmitProduct from "../../components/SubmitProduct/SubmitProduct";
 //import css from "./Product.module.css";
 //import JustTesting from "../../components/JustTesting/JustTesting";
 export default class Product extends Component {
@@ -8,8 +8,9 @@ export default class Product extends Component {
     userNewProduct: "محصول  شماره ۱  ",
     sellerName: "فروشنده لاگین شده .",
     userProductAlreadyExisted: true,
-    existingProducts: ["کفش", "عینک", "سبد", "میوه", "کلاه"],
-    existingSubProducts: [],
+   /*  existingProducts: ["کفش", "عینک", "سبد", "میوه", "کلاه"], */
+    /* existingSubProducts: [], */
+    productsTitles: ["قیمت ", "موجودی", "وزن"],
   };
 
   getUserProduct = (evt) => {
@@ -23,11 +24,12 @@ export default class Product extends Component {
           seggests={this.state.existingProducts}
           clicked={this.getUserProduct}
         />
-        <ModifyProduct
+        <SubmitProduct
           subProducts={this.state.existingSubProducts}
           userProductAlreadyExisted={this.state.userProductAlreadyExisted}
           sellerName={this.state.sellerName}
           userEditingProduct={this.state.userNewProduct}
+          columns={this.state.productsTitles}
         />
       </div>
     );
