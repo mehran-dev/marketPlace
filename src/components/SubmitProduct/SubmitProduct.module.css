@@ -46,10 +46,11 @@
 .customRoundStyle2 {
   border-radius: 30px;
   padding: 3px 10px;
-   border-bottom: 2px solid #7db486;
+/*    border-bottom: 2px solid #7db486;
   border-top: 2px solid #7db486;
   border-right: 2px solid #7db486;
-  border-left: 2px solid #7db486;
+  border-left: 2px solid #7db486; */
+  border : 1px solid rgb(147, 156, 139);
   display: inline-block;
   margin: 6px 12px;
 }

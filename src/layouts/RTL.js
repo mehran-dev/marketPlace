@@ -18,6 +18,9 @@ import styles from "assets/jss/material-dashboard-react/layouts/rtlStyle.js";
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
+
+
+
 let ps;
 
 const switchRoutes = (
@@ -93,10 +96,14 @@ export default function RTL({ ...rest }) {
     };
   }, [mainPanel]);
   return (
+
+
+
+   
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"الإبداعية تيم"}
+        logoText={"‍پنل کاربری"}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
@@ -132,5 +139,6 @@ export default function RTL({ ...rest }) {
         />
       </div>
     </div>
+   
   );
 }

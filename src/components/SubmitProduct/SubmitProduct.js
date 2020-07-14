@@ -13,10 +13,33 @@ export default class SubmitProduct extends Component {
     newColumnAddedConfirm: false,
     rows: 1,
     columns: this.props.columns,
-   /*  options: [["q","dw","wqd"],
-  ["uiltyrhrg","wegfgewgf","ewgfews"],["wefwe","wef","wegfwe"]], */
-    //data: [{}],
-   options:{}
+ allOptions:{
+   "قیمت":[
+     "23000",
+     "55000",
+     "85000",
+     "69000"],
+   "موجودی":[
+"موجود",
+"ناموجود",
+"درحال تولید",
+
+   ],
+   "وزن":[
+"150g",
+"360g",
+"635g",
+"965g",
+
+   ]
+ },
+   options:{},
+   allValues:{
+     "kkk":"kakhall docxtor",
+     "45":"4w5t",
+     "4m5":"45",
+     "45y":"45y45y45",
+   }
 
 
 
@@ -36,6 +59,26 @@ export default class SubmitProduct extends Component {
     return hash;
   };
 
+
+getValueHandler=(inputId,inputVal)=>{
+
+  console.log("stateOld:",this.state.allValues);
+
+  let oldData={...this.state.allValues}
+
+console.log("oldData",oldData);
+const pair={inputId:inputVal}
+const updatedData={...oldData,...pair};
+console.log("updatedData222222",updatedData);
+
+
+  this.setState({
+    allValues:updatedData
+  })
+console.log("newState now is :",this.state.allValues);
+}
+
+
   componentDidMount() {
     console.log("Does have any Hashes??", this.stringToHash("gfg"));
     ///this.extractColumnsAndRowsFromJsonData();
@@ -54,7 +97,7 @@ export default class SubmitProduct extends Component {
   addCol = (colName) => {
     let isDuplicate = false;
     let duplication = this.state.columns.map((col) => {
-      return col === colName;
+      return col.trim() === colName.trim();
     });
     duplication.forEach((element) => {
       if (element === true) {
@@ -63,7 +106,7 @@ export default class SubmitProduct extends Component {
       }
     });
     if (isDuplicate) {
-      document.getElementById("newColName").style({borderColor:"red"})
+      document.getElementById("newColName").style.borderColor="red"
       alert("قبلا موجود است");
       return ;
     }
@@ -128,6 +171,7 @@ export default class SubmitProduct extends Component {
   };
 
   render() {
+  
     let rows = [];
     const theads = this.state.columns.map((h) => {
       return <th key={h}>{h}</th>;
@@ -143,9 +187,12 @@ export default class SubmitProduct extends Component {
           >
             <TableInput
               className={css.bgGrey}
-              placeHolder="مقدار جدیدی را وارد کنید "
+              placeHolder={col}
               id={j + "__" + this.stringToHash(col)}
-              options={this.state.options[index]}
+              options={this.state.allOptions[col]}
+              value={this.state.allValues[j + "__" + this.stringToHash(col)]?this.state.allValues[j + "__" + this.stringToHash(col)]:""}
+              onChange={()=>{return 0;}}
+              getValue={(id,val)=>this.getValueHandler(id,val)}
             />
           </td>
         );

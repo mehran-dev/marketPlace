@@ -46,6 +46,7 @@
 }
 .root label {
   transform: translate(30px, 4px) scale(1);
+  font-size: 10pt;
 }
 .clearIndicator {
   display: none !important;

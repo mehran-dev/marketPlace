@@ -37,6 +37,9 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "views/RTLPage/RTLPage.js";
 import Product from "./views/Product/Product";
 
+
+
+
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -51,7 +54,7 @@ const dashboardRoutes = [
     name: "Products",
     rtlName: "افزودن محصول",
     icon: Dashboard,
-    component: Product,
+    component:  Product,
     layout: "/rtl",
   },
   {

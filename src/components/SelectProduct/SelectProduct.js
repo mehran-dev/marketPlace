@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import css from "./SelectProduct.module.css";
 import Button from "../CustomButtons/Button";
 import TextField from "@material-ui/core/TextField";
@@ -10,7 +10,6 @@ import axios from "axios";
 import Spinner from '../UI/Spinner/Spinner'; 
 
 
-
 export default function SelectProduct(props) {
     // React Hooks //
     const [seggestions, SetSeggesstions] = useState([]);
@@ -18,7 +17,8 @@ export default function SelectProduct(props) {
     const [, setValue] = useState(null);
     const filter = createFilterOptions();
     
-    
+
+
     useEffect(() => {
         /*  setTimeout(() => {
           SetSeggesstions(props.seggests);
@@ -30,12 +30,12 @@ export default function SelectProduct(props) {
 
 
 // functions And So On .... //
-    const continueAddingProccess = () => {
+     const continueAddingProccess = () => {
         const newUserProduct = document.getElementById("userProduct").value;
         let AlreadyExisted = false;
         
         if (newUserProduct.trim() === "") {
-            alert("No value is Entered ");
+            alert("No value is Entered");
         } else {
           //  alert("ur val of Choice Now is " + newUserProduct);
             setLoading(true);
@@ -43,11 +43,14 @@ export default function SelectProduct(props) {
             setTimeout(() => {
                 AlreadyExisted = (Math.random() >= 0.5) ? true : false
                setLoading(false);
+props.changeStatus(true)
                 alert("alreadyExisted on server ??" + AlreadyExisted);
+
+
 
             }, 2000);
         }
-    };
+    }; 
 
    
 
@@ -168,11 +171,17 @@ export default function SelectProduct(props) {
             { width: "50%", margin: "16px auto" ,position:"relative"}
         }
         onClick = {
-            () => continueAddingProccess()
+            () =>continueAddingProccess()
         }
         color = "info" >
         ادامه
         {loading&&<div className={css.spinnerHolder}> <Spinner/> </div>}
-         </Button> </div>
+         </Button> 
+         
+         
+         
+    
+             </div>
+
     );
 }

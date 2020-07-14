@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
+import { checkPropTypes } from "prop-types";
 
 
 
@@ -76,14 +77,19 @@ function TableInput(props) {
       onFocus={(e) => {
         console.log("onFocuse e:", e.target.value);
       }}
-      onClose={(e) => console.log("onClose e:", e.target.value)}
+      onClose={(e) =>{
+
+        console.log("onClose e:", e.target.value);
+        props.getValue(props.id ,e.target.value)
+      } 
+    }
       onKeyPress={(e) => {
         console.log("onKeyPress e:", e.target.value);
       }}
       onKeyUp={(e) => {
         console.log("onKeyUp e:", e.target.value);
       }}
-      options={["line 111 tableinput"]}
+      options={props.options ?props.options:[]}
       /*       getOptionLabel={(seggestions) => seggestions.title}
        */ getOptionLabel={(option) => {
         // Value selected with enter, right from the input
@@ -103,7 +109,7 @@ function TableInput(props) {
             className: css.inputColor,
           }}
           {...params}
-          label="مقدار جدید"
+          label={props.placeHolder + " "+"محصول"}
           variant="outlined"
         />
       )}
