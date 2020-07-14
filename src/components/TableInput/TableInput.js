@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import css from "./TableInput.module.css";
 //import useAutocomplete from "@material-ui/lab/useAutocomplete";
 
@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
-import { checkPropTypes } from "prop-types";
+
 
 
 
@@ -25,10 +25,11 @@ function TableInput(props) {
   //const [classes, setClasses] = useState([css.Input, css.touched]);
   //console.log("line 5 classes", classes);
   // const classes = [css.Input];
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(null);
+  const [myValue, setMyValue] = useState(props.value);
 
 /*   const {
-     getRootProps,
+    getRootProps,
     getInputLabelProps,
     getInputProps,
     getListboxProps,
@@ -44,6 +45,7 @@ function TableInput(props) {
 
   return ( 
     <Autocomplete
+    value={value} 
       fullWidth
       classes={{
         inputRoot: css.inputRoot,
@@ -57,9 +59,8 @@ function TableInput(props) {
       }}
       id={props.id}
       freeSolo
-      // onChange={(e) => console.log("onChange e:", e.target.value)}
       onChange={(event, newValue) => {
-        if (typeof newValue === "string") {
+        if (typeof newValue === 'string') {
           setValue({
             title: newValue,
           });
@@ -71,29 +72,72 @@ function TableInput(props) {
         } else {
           setValue(newValue);
         }
-
-        console.log("is this okey ??", value);
       }}
+      onInputChange={(event, newValue) => {
+        setMyValue(newValue);
+          if (typeof newValue === "string") {
+            setValue({
+              title: newValue,
+            }); 
+          } else if (newValue && newValue.inputValue  ) {
+            // Create a new value from the user input
+             setValue({
+              title: newValue.inputValue,
+            }); 
+          
+          } else {
+          setValue(newValue)
+          }
+  
+          console.log("onInputChange myyyyvalue is ", myValue );
+                
+  
+
+
+        
+      }}
+      getOptionSelected={(option,value)=>{
+//console.log("op,val",value);
+      }
+
+      }
       onFocus={(e) => {
-        console.log("onFocuse e:", e.target.value);
+        setMyValue(e.target.value);
       }}
       onClose={(e) =>{
+        setMyValue(e.target.value);
+      
+console.log("onclose e ",e.target.value);
+// props.getValue(props.id , myValue)
 
-        console.log("onClose e:", e.target.value);
-        props.getValue(props.id ,e.target.value)
+
       } 
     }
       onKeyPress={(e) => {
-        console.log("onKeyPress e:", e.target.value);
+      
       }}
       onKeyUp={(e) => {
-        console.log("onKeyUp e:", e.target.value);
+        setMyValue(e.target.value);
+      
       }}
-      options={props.options ?props.options:[]}
+      options={props.options  ?props.options:[] }
       /*       getOptionLabel={(seggestions) => seggestions.title}
-       */ getOptionLabel={(option) => {
+       *//*  getOptionLabel={(option) => {
         // Value selected with enter, right from the input
         if (typeof option === "string") {
+          return option;
+        }
+        // Add "xxx" option created dynamically
+        if (option.inputValue) {
+          return option.inputValue;
+        }
+        // Regular option
+        return option.title;
+      }} */
+      getOptionLabel={(option) => {
+       // console.log('option',option)
+        // Value selected with enter, right from the input
+        if (typeof option === 'string') {
           return option;
         }
         // Add "xxx" option created dynamically

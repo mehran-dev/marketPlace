@@ -35,10 +35,10 @@ export default class SubmitProduct extends Component {
  },
    options:{},
    allValues:{
-     "kkk":"kakhall docxtor",
-     "45":"4w5t",
-     "4m5":"45",
-     "45y":"45y45y45",
+     /* "id1":"kakhall docxtor",
+     "id2":"4w5t",
+     "id3":"45",
+     "id4":"45y45y45", */
    }
 
 
@@ -61,36 +61,41 @@ export default class SubmitProduct extends Component {
 
 
 getValueHandler=(inputId,inputVal)=>{
-
-  console.log("stateOld:",this.state.allValues);
+//console.log("id,val",inputId,inputVal);
+  //console.log("stateOld:",this.state.allValues);
 
   let oldData={...this.state.allValues}
 
-console.log("oldData",oldData);
+//console.log("oldData",oldData);
 const pair={inputId:inputVal}
-const updatedData={...oldData,...pair};
-console.log("updatedData222222",updatedData);
+let updatedData={...oldData};
+updatedData[inputId]=inputVal
+
+//console.log("updatedData222222",updatedData);
 
 
   this.setState({
     allValues:updatedData
   })
-console.log("newState now is :",this.state.allValues);
+  setTimeout(() => {
+    
+    console.log("newState now is :",this.state.allValues);
+  }, 1000);
 }
 
 
   componentDidMount() {
-    console.log("Does have any Hashes??", this.stringToHash("gfg"));
+    //console.log("Does have any Hashes??", this.stringToHash("gfg"));
     ///this.extractColumnsAndRowsFromJsonData();
 /* const  ops= this.props.columns.map(col=>{
     return
   }) */
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log("cdu");
+    //console.log("cdu");
   }
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("scu");
+    //console.log("scu");
     return true;
   }
 
