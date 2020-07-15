@@ -44,6 +44,9 @@ export default class SubmitProduct extends Component {
 
 
   };
+  NewColInputRef = React.createRef();
+  
+  
   stringToHash = (string) => {
     let char;
     var hash = 0;
@@ -77,10 +80,10 @@ updatedData[inputId]=inputVal
   this.setState({
     allValues:updatedData
   })
-  setTimeout(() => {
+/*   setTimeout(() => {
     
     console.log("newState now is :",this.state.allValues);
-  }, 1000);
+  }, 1000); */
 }
 
 
@@ -111,16 +114,19 @@ updatedData[inputId]=inputVal
       }
     });
     if (isDuplicate) {
-      document.getElementById("newColName").style.borderColor="red"
+     // document.getElementById("newColName").style.borderColor="red"
       alert("قبلا موجود است");
       return ;
     }
     if (colName.trim() === "") {
     //  alert("نام ستون جدید را وارد کنید ");
-    const inputElement=document.getElementById("newColName")
-    inputElement.style.borderColor="red";
+   /*  const inputElement=document.getElementById("newColName")
+    inputElement.style.borderColor="red"; */
     //inputElement.style.boxShadow="inset 0px 0px 10px red";
-
+    /* this.NewColInputRef.current.classList.add(css.borderAlert);
+    inputRef = this.NewColInputRef.current; */
+    
+    this.NewColInputRef.current.classList.add(css.borderAlert);
       return ;
     }
 
@@ -206,15 +212,19 @@ updatedData[inputId]=inputVal
 
     return (
       <React.Fragment>
-        <div className={css.container}>
+
+<div className={css.container2}>
           <span className={css.customRoundStyle2}>
             محصول انتخابی: :{this.props.userEditingProduct}
           </span>
           <span className={css.customRoundStyle2}>
             فروشنده :{this.props.sellerName}
           </span>
+        <div className={css.container}>
 
           <div className="container">
+         
+
             <table>
               <thead>
                 <tr>{theads}</tr>
@@ -233,7 +243,7 @@ updatedData[inputId]=inputVal
           </div>
         </div>
         <Button color="success"> ذخیره </Button>
-
+        </div>
         {!this.state.newColumnAdding && !this.state.newColumnAddedConfirm && (
           <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
             <h5 className={css.title}>نیاز به افزودن وی‍رگی جدیدی دارم.</h5>
@@ -254,7 +264,13 @@ updatedData[inputId]=inputVal
               <input
                 className={css.newColName}
                 id="newColName"
+                ref={this.NewColInputRef}
                 placeholder="ویژگی مورد نظر"
+                onChange={()=>{
+                // document.getElementById("newColName").style.borderColor="rgba(204, 204, 204, 0.582)"
+                // document.getElementById("newColName").focus();
+                 this.NewColInputRef.current.classList.remove(css.borderAlert);
+                }}
               />
               را به ویژگی های موجود   
               <Button

@@ -23,11 +23,23 @@
 .container {
   overflow: scroll;
   padding: 3px 8px;
-  border: 2px solid #a5a5a5;
-  margin: 6px;
+  border: 2px solid #e2e2e2;
+  margin: 0px;
   margin-top: 16px;
-  box-shadow: 1px 1px 1px rgb(145, 145, 145);
+  margin-bottom: 16px;
+  /* box-shadow: 1px 1px 1px rgb(145, 145, 145); */
   border-radius: 3px;
+  max-height: 350px;
+  min-height: 200px;
+}
+.container2{
+  padding: 2px;
+  border: 2px solid #d4d4d4;
+  margin-top: 6px;
+  box-shadow: 0px 0px 0px rgb(145, 145, 145);
+  border-radius: 3px;
+  text-align: center;
+
 }
 .flxContainer {
   display: flex;
@@ -44,7 +56,8 @@
 }
 
 .customRoundStyle2 {
-  border-radius: 30px;
+  border-radius: 3px;
+  box-shadow:inset 0 0 12px rgba(74, 189, 132, 0.301);
   padding: 3px 10px;
 /*    border-bottom: 2px solid #7db486;
   border-top: 2px solid #7db486;
@@ -80,3 +93,18 @@
   border-radius: 3px;
   border: 1px solid #bbb;
 }
+.borderAlert{
+  border-color: red;
+  background-color: rgba(230, 144, 161, 0.192);
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.452);
+position: relative;
+}
+/* 
+I have no idea why its not working ... 
+.borderAlert::after{
+  content: "الزامی";
+color: red;
+display: inline-block;
+position: absolute;
+width: 150%;
+} */

@@ -27,6 +27,11 @@
   /*   background-color: rgb(0, 119, 230);
  */
 }
+
+.listbox {
+  /*   background-color: chartreuse;
+   */  direction: rtl;
+  }
 .root {
   /*   background-color: rgb(211, 7, 7);
  */
