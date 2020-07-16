@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import css  from './PriceAmountEdit.module.css';
-import TableData from '../../components/TableData/TableData';
+import TableDataEditable from '../../components/TableDataEditable/TableDataEditable';
 import TableInput from 'components/TableInput/TableInput';
 
 
@@ -14,9 +14,9 @@ export default class PriceAmountEdit extends Component{
                 PriceAmountEdit
 
 
+                <TableDataEditable/>
 
-
-                <TableData/>
+              
             </div>
         )
     }

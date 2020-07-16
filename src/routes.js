@@ -24,6 +24,8 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
+
+
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
@@ -73,7 +75,7 @@ const dashboardRoutes = [
     rtlName: "کار ها",
     icon: "content_paste",
     component: TableList,
-    layout: "/admin",
+    layout: "/rtl",
   },
   {
     path: "/typography",
@@ -81,7 +83,7 @@ const dashboardRoutes = [
     rtlName: "تیکت ها",
     icon: LibraryBooks,
     component: Typography,
-    layout: "/admin",
+    layout: "/rtl",
   },
   {
     path: "/icons",
@@ -89,7 +91,7 @@ const dashboardRoutes = [
     rtlName: "کاربران",
     icon: BubbleChart,
     component: Icons,
-    layout: "/admin",
+    layout: "/rtl",
   },
   {
     path: "/maps",
@@ -97,7 +99,7 @@ const dashboardRoutes = [
     rtlName: "راست",
     icon: LocationOn,
     component: Maps,
-    layout: "/admin",
+    layout: "/rtl",
   },
   {
     path: "/notifications",
@@ -105,7 +107,7 @@ const dashboardRoutes = [
     rtlName: "هشدار ها",
     icon: Notifications,
     component: NotificationsPage,
-    layout: "/admin",
+    layout: "/rtl",
   },
  /*  {
     path: "/rtl-page",
@@ -121,7 +123,7 @@ const dashboardRoutes = [
     rtlName: "پیام های ادمین",
     icon: Unarchive,
     component: UpgradeToPro,
-    layout: "/admin",
+    layout: "/rtl",
   },
 ];
 
