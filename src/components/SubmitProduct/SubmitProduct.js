@@ -4,6 +4,11 @@ import css from "./SubmitProduct.module.css";
 import Button from "../CustomButtons/Button";
 import TableInput from "../TableInput/TableInput";
 //import { object } from "prop-types";
+import Modal from '../../components/UI/Modal/Modal'; 
+
+import SubmitProductAddControl from './submitProductAddControl/submitProductAddControl';
+
+
 
 export default class SubmitProduct extends Component {
   state = {
@@ -12,6 +17,7 @@ export default class SubmitProduct extends Component {
     newColumnAdding: false,
     newColumnAddedConfirm: false,
     rows: 1,
+    columnNameAlreadyExisted:false,
     columns: this.props.columns,
  allOptions:{
    "قیمت":[
@@ -40,11 +46,12 @@ export default class SubmitProduct extends Component {
      "id3":"45",
      "id4":"45y45y45", */
    }
-
+,
+showNewRowModal:false
 
 
   };
-  NewColInputRef = React.createRef();
+   NewColInputRef = React.createRef(); 
   
   
   stringToHash = (string) => {
@@ -102,7 +109,18 @@ updatedData[inputId]=inputVal
     return true;
   }
 
-  addCol = (colName) => {
+refTransfer=(el)=>{
+ this.NewColInputRef.ref=el;
+}
+modalClosedHandler=()=>{
+this.setState({
+  showNewRowModal:false
+});
+}
+  
+
+
+addCol = (colName) => {
     let isDuplicate = false;
     let duplication = this.state.columns.map((col) => {
       return col.trim() === colName.trim();
@@ -115,24 +133,23 @@ updatedData[inputId]=inputVal
     });
     if (isDuplicate) {
      // document.getElementById("newColName").style.borderColor="red"
-      alert("قبلا موجود است");
-      return ;
+     // alert("قبلا موجود است");
+      this.setState({
+        columnNameAlreadyExisted:true
+      })
+     return ;
     }
     if (colName.trim() === "") {
     //  alert("نام ستون جدید را وارد کنید ");
    /*  const inputElement=document.getElementById("newColName")
     inputElement.style.borderColor="red"; */
     //inputElement.style.boxShadow="inset 0px 0px 10px red";
-    /* this.NewColInputRef.current.classList.add(css.borderAlert);
-    inputRef = this.NewColInputRef.current; */
-    
-    this.NewColInputRef.current.classList.add(css.borderAlert);
+/*      this.NewColInputRef.current.classList.add(css.borderAlert);
+ */    /*inputRef = this.NewColInputRef.current; */
+    document.getElementById("newColName").classList.add(css.borderAlert)
+   // this.NewColInputRef.current.classList.add(css.borderAlert);
       return ;
     }
-
-
-    
-
     const oldColumns = [...this.state.columns];
     //splice doesnt return new array !!!
     oldColumns.splice(-3, 0, colName);
@@ -148,10 +165,20 @@ updatedData[inputId]=inputVal
      this.setState({
       newColumnAddedConfirm: false
      })
-    }, 1000);
+    }, 2000);
   };
 
+
+
+
+
+
+
+
+
+
   addNewRow = () => {
+    
     let NeedTobeAdded;
     const lastRow = this.state.rows ;
     this.state.columns.map((c, index) => {
@@ -164,8 +191,11 @@ updatedData[inputId]=inputVal
       }
     });
     if (!NeedTobeAdded) {
-      alert("آخرین ردیف شما هنوز خالیست !!");
+      this.setState({showNewRowModal:true})
+      //alert("آخرین ردیف شما هنوز خالیست !!");
+
     } else {
+    
       this.setState((prevState) => {
         return {
           rows: prevState.rows + 1,
@@ -176,12 +206,44 @@ updatedData[inputId]=inputVal
   };
 
   showAddNewColumnHandler = () => {
+    //alert("Inrered In showAddNewColumnHandler")
     this.setState({
       newColumnAdding: true,
     });
   };
 
   render() {
+  let newRowModal =null;
+
+  if(this.state.showNewRowModal){
+    newRowModal=  <Modal 
+    sendOpenSignal={this.state.showNewRowModal}
+     modalClosed={this.modalClosedHandler}
+     title="آخرین ردیف خالیست" 
+     message="نمی توان همزمان چند ردیف خالی در آخرین سطر ها داشت "
+     />
+
+  }else{
+   //I think Now Else is unnessaserry
+    newRowModal=null
+  }
+
+
+
+  let newColumnNameRepetitiveModal=null;
+  if(this.state.columnNameAlreadyExisted){
+    newColumnNameRepetitiveModal=
+    <Modal
+    sendOpenSignal={this.state.columnNameAlreadyExisted}
+    modalClosed={()=>{
+this.setState({
+  columnNameAlreadyExisted:false
+})
+    }}
+    title="ویژگی موجود است"
+    message="ویژگی وارد شده از قبل وجود دارد "
+    />
+  }
   
     let rows = [];
     const theads = this.state.columns.map((h) => {
@@ -212,7 +274,8 @@ updatedData[inputId]=inputVal
 
     return (
       <React.Fragment>
-
+{ newRowModal}
+{newColumnNameRepetitiveModal}
 <div className={css.container2}>
           <span className={css.customRoundStyle2}>
             محصول انتخابی: :{this.props.userEditingProduct}
@@ -235,57 +298,83 @@ updatedData[inputId]=inputVal
                 })}
                 <tr>
                   <td>
-                    <button onClick={this.addNewRow}>سطر جدید</button>
+                    <button className={css.addRowBtn} onClick={this.addNewRow}>سطر جدید</button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <Button color="success"> ذخیره </Button>
+        <Button 
+        onClick={()=>{
+          console.log(this.state.allValues);
+        }}
+        color="success"> ذخیره </Button>
         </div>
-        {!this.state.newColumnAdding && !this.state.newColumnAddedConfirm && (
-          <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
-            <h5 className={css.title}>نیاز به افزودن وی‍رگی جدیدی دارم.</h5>
-            <Button onClick={this.showAddNewColumnHandler} color="rose">
-              افرودن ویزگی جدید
-            </Button>
-          </div>
-        )}
-        {this.state.newColumnAddedConfirm && (
-          <div className={css.customRoundStyle}>
-            
-            <h5><span> &#9989;</span> ویژگی جدید افزوده شد</h5>
-          </div>
-        )}
-        {this.state.newColumnAdding && (
-          <div className={css.customRoundStyle}>
-            <h5>
-              <input
-                className={css.newColName}
-                id="newColName"
-                ref={this.NewColInputRef}
-                placeholder="ویژگی مورد نظر"
-                onChange={()=>{
-                // document.getElementById("newColName").style.borderColor="rgba(204, 204, 204, 0.582)"
-                // document.getElementById("newColName").focus();
-                 this.NewColInputRef.current.classList.remove(css.borderAlert);
-                }}
-              />
-              را به ویژگی های موجود   
-              <Button
-                color="warning"
-                onClick={() => {
-                  this.addCol(document.getElementById("newColName").value);
-                 
-                }}
-              >
-                اضافه کن.
-              </Button>
-            </h5>
-          </div>
-        )}
+
+
+
+<SubmitProductAddControl
+newColumnAdding={this.state.newColumnAdding}
+newColumnAddedConfirm={this.state.newColumnAddedConfirm}
+/* showAddNewColumn={this.showAddNewColumnHandler} */
+showAddNewColumnHandler={this.showAddNewColumnHandler}
+addCol={this.addCol}
+nwColInput={this.ref}
+/>
       </React.Fragment>
     );
   }
 }
+
+
+
+
+
+
+
+
+/*  <div className={css.animationContainer}>
+    
+  {!this.state.newColumnAdding && !this.state.newColumnAddedConfirm && (
+    <div className={[css.flxContainer, css.customRoundStyle].join(" ")}>
+      <h5 className={css.title}>نیاز به افزودن وی‍رگی جدیدی دارم.</h5>
+      <Button onClick={this.showAddNewColumnHandler} color="rose">
+        افرودن ویزگی جدید
+      </Button>
+    </div>
+  )}
+  {this.state.newColumnAddedConfirm&&(
+    <div 
+    className={css.customRoundStyle}>
+      <h5><span> &#9989;</span> ویژگی جدید افزوده شد</h5>
+    </div>
+  )}
+  {this.state.newColumnAdding && (
+    <div className={css.customRoundStyle}>
+      <h5>
+        <input
+          className={css.newColName}
+          id="newColName"
+          ref={this.NewColInputRef}
+          placeholder="ویژگی مورد نظر"
+          onChange={()=>{
+          // document.getElementById("newColName").style.borderColor="rgba(204, 204, 204, 0.582)"
+          // document.getElementById("newColName").focus();
+           this.NewColInputRef.current.classList.remove(css.borderAlert);
+          }}
+        />
+        را به ویژگی های موجود   
+        <Button
+          color="warning"
+          onClick={() => {
+            this.addCol(document.getElementById("newColName").value);
+           
+          }}
+        >
+          اضافه کن.
+        </Button>
+      </h5>
+    </div>
+  )}
+  </div> */

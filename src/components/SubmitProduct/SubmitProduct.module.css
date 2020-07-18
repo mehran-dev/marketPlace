@@ -1,12 +1,10 @@
 .ModifyProduct {
-  background-color: yellow;
+  background-color: rgb(255, 255, 0);
 }
 
 .newColName {
   outline: none;
-
   border: 2px solid rgba(204, 204, 204, 0.582);
-
   background-color: transparent;
   margin: 0 12px;
   line-height: 1.8;
@@ -32,7 +30,7 @@
   max-height: 350px;
   min-height: 200px;
 }
-.container2{
+/* .container2{
   padding: 2px;
   border: 2px solid #d4d4d4;
   margin-top: 6px;
@@ -40,7 +38,7 @@
   border-radius: 3px;
   text-align: center;
 
-}
+} */
 .flxContainer {
   display: flex;
   justify-content: space-around;
@@ -55,49 +53,51 @@
   margin: 12px auto;
 }
 
-.customRoundStyle2 {
+/* .customRoundStyle2 {
   border-radius: 3px;
   box-shadow:inset 0 0 12px rgba(74, 189, 132, 0.301);
   padding: 3px 10px;
-/*    border-bottom: 2px solid #7db486;
-  border-top: 2px solid #7db486;
-  border-right: 2px solid #7db486;
-  border-left: 2px solid #7db486; */
+
   border : 1px solid rgb(147, 156, 139);
   display: inline-block;
   margin: 6px 12px;
-}
-.hoverPlus:hover {
-  background-color: thistle;
-}
-.hoverPlus:hover::before {
-  content: "+";
-  background-color: blue;
-  border-radius: 120px;
-  width: 120px;
-  height: 120px;
-  position: relative;
-  opacity: 1;
-}
-.hoverPlus::before {
-  content: "+";
-  background-color: blue;
-  border-radius: 120px;
-  width: 120px;
-  height: 120px;
-  position: relative;
-  opacity: 0;
-}
+} */
+
 .bgGrey {
   background-color: rgba(216, 216, 216, 0.651);
   border-radius: 3px;
   border: 1px solid #bbb;
 }
 .borderAlert{
+  border: 2px solid red !important;
   border-color: red;
   background-color: rgba(230, 144, 161, 0.192);
   box-shadow: 0 0 6px rgba(255, 0, 0, 0.452);
 position: relative;
+}
+.addRowBtn{
+  border: 2px solid transparent;
+  outline: none;
+color:crimson;
+border-radius: 30px;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.addRowBtn:hover{
+  /*  background-color: crimson; */
+   color: rgb(221, 0, 0);
+   text-shadow: 1px 1px 6px red ;
+ 
+ }
+.addRowBtn:active,
+.addRowBtn:focus{
+ 
+ text-shadow: 0 0 1px rgba(255, 0, 0, 0.486);
+
+}
+
+.addRowBtn::before{
+  content: "  +  ";
 }
 /* 
 I have no idea why its not working ... 
@@ -108,3 +108,8 @@ display: inline-block;
 position: absolute;
 width: 150%;
 } */
+
+.animationContainer >*{
+  background-color: turquoise;
+  transition: all 2.2s ease;
+}

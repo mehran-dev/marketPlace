@@ -1,7 +1,10 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import MaterialTable from 'material-table';
 import image from '../../assets/img/faces/marc.jpg';
 import TablePagination from '@material-ui/core/TablePagination';
+import Spinner from '../../components/UI/Spinner/Spinner'; 
+import css from './TableDataEditable.module.css'; 
+import Modal from '../../components/UI/Modal/Modal'; 
 
 
         /* 
@@ -15,6 +18,9 @@ export default function MaterialTableDemo() {
 
 
   const [selectedRow, setSelectedRow] = useState(null);
+  const [loading,setLoading]=React.useState(true);
+  const[error,setError]=useState(false);
+
   const [state, setState] = React.useState({
     columns: [
       { title: 'محصول',
@@ -22,7 +28,6 @@ export default function MaterialTableDemo() {
        editable: "never"
       // render:rowData=> <div style={{border:'2px solid yellow' ,width:'16px',height:"16px"}}> <img src={image} style={{backgroundColor:"red" , width:"100%",borderRadius:'3px'}}/></div>,
      /*   lookup:{12:"تهران",56:"شهرستان"} */
-    
     },
       { title: 'مشخصات', field: 'surname' ,isEditable:false},
       { title: 'قیمت', field: 'surname' },
@@ -47,11 +52,39 @@ export default function MaterialTableDemo() {
         birthYear: 1395,
         birthCity: 34,
       },
+      {
+        name: 'حسن',
+        surname: 'یوسفی',
+        birthYear: 2015,
+        birthCity: 34,
+      },
     ],
   });
 
+useEffect(() => {
+  //http request
+
+  setTimeout(() => {
+    setLoading(false);
+    let errChance = Math.floor(Math.random()*100);
+    console.log(errChance);
+    if (errChance>=1)setError(true);
+  }, 100);
+}, )
+
+
   return (
-    <MaterialTable
+
+    <React.Fragment>
+      {error&&<Modal title="مشکلی پیش آمده" message="ممکن است اشکال از اتصال اینترنت و یا سرور باشد"/>}
+      {error&&<button onClick={(e)=>{
+console.log(e);
+        setTimeout(() => {
+          setError(false);
+        }, 1000);
+      }}>تلاش مجدد </button>}
+      {!error&&loading&& <div className={css.SpinnerContainer}>  <Spinner/> </div> }
+   {!error&&!loading&& <MaterialTable
     components = {{
         Pagination: props => (
           <TablePagination {...props} style={{ direction: "ltr" }} />
@@ -67,7 +100,8 @@ export default function MaterialTableDemo() {
         /*  
         puts the action to the left side 
         we dont want that in farsi mode RTL directions  
-        actionsColumnIndex: -1, */
+        actionsColumnIndex: -1,
+         */
 
         headerStyle: {
           backgroundColor: '#01579b',
@@ -81,7 +115,6 @@ export default function MaterialTableDemo() {
                     }, */
           
 
-
           rowStyle: rowData => ({
             color: (selectedRow === rowData.tableData.id) ? '#ff2500' : '#de1000',
             backgroundColor: (selectedRow === rowData.tableData.id) ? '#00f000' : '#00c000',
@@ -89,14 +122,6 @@ export default function MaterialTableDemo() {
     
     
     }}
-
-
-
-
-
-
-
-
 
     actions={[
         {
@@ -116,7 +141,6 @@ export default function MaterialTableDemo() {
 
 
        editable={{
-
 //   Icon Plus ke bala safhe hastesh ro mighouyad
        onRowAdd: (newData) =>
           new Promise((resolve) => {
@@ -129,6 +153,7 @@ export default function MaterialTableDemo() {
               });
             }, 600);
           }), 
+
 
 
 
@@ -166,5 +191,9 @@ export default function MaterialTableDemo() {
       }}//end of editable  
 
     />
+    // end if loading condition 
+    }
+
+    </React.Fragment>
   );
 }

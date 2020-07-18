@@ -71,7 +71,8 @@ left: -50%;
 
 /*  */
 .bgRedAlert{
-  background-color: red !important;
+  background-color: crimson !important;
+  transition: all 1.2s ease;
 }
 
 .titleAlert{
@@ -80,4 +81,6 @@ left: -50%;
   font-weight:bold;
   background-color: crimson;
   border-radius: 36px;
+  transition: all 0.9s ease;
+
 }

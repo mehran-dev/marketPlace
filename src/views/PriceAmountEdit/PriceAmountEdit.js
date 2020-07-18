@@ -11,9 +11,7 @@ export default class PriceAmountEdit extends Component{
     render() {
         return (
             <div >
-                PriceAmountEdit
-
-
+                
                 <TableDataEditable/>
 
               
