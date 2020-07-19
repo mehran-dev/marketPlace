@@ -3,4 +3,16 @@
     height: 150px;
     margin: 10px auto;
 }
-
+.paginationRoot{
+    background-color: rebeccapurple;
+}
+.paginationToolbar{
+    background-color: royalblue;
+    border-radius: 60px;
+}
+.paginationCaption{
+    background-color: sandybrown;
+}
+.paginationSelectRoot{
+    background-color: rgb(142, 225, 65);
+}

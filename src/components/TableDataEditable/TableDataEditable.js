@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import MaterialTable from 'material-table';
-import image from '../../assets/img/faces/marc.jpg';
 import TablePagination from '@material-ui/core/TablePagination';
 import Spinner from '../../components/UI/Spinner/Spinner'; 
 import css from './TableDataEditable.module.css'; 
@@ -25,38 +24,75 @@ export default function MaterialTableDemo() {
     columns: [
       { title: 'محصول',
        field: 'name' ,
-       editable: "never"
+       editable: "never",
+       maxWidth: 20,
+       align: 'right',
+       format: (value) => value.toLocaleString('fa'),
+       width:"20px",
+       cellStyle:{
+         backgroundColor:"red",
+         textAlign:"center",
+         border:"1px solid black"
+       },
+       headerStyle:{
+       }
       // render:rowData=> <div style={{border:'2px solid yellow' ,width:'16px',height:"16px"}}> <img src={image} style={{backgroundColor:"red" , width:"100%",borderRadius:'3px'}}/></div>,
      /*   lookup:{12:"تهران",56:"شهرستان"} */
     },
-      { title: 'مشخصات', field: 'surname' ,isEditable:false},
-      { title: 'قیمت', field: 'surname' },
-      { title: 'تعداد', field: 'birthYear', type: 'numeric' },
-      {
+      { title: 'مشخصات',
+       field: 'properties' , 
+       editable: "never",
+       isEditable:false,
+       width:"600px",
+      cellStyle:{
+        backgroundColor:"blue",
+        textAlign:"center",
+      
+      }},
+      { title: 'قیمت', field: 'price', 
+      
+      cellStyle:{
+        backgroundColor:"yellow",
+        textAlign:"center",
+        width:"20px"
+      } },
+      { title: 'تعداد', field: 'amount', type: 'numeric',
+      cellStyle:{
+        backgroundColor:"green",
+        textAlign:"center",
+        width:"20px"
+      }
+    },
+    /*   {
         title: 'محل تولد',
-        field: 'birthCity',
-      render:rowData=>{
+        field: 'amount',
+ 
+return custom style and ....      
+ render:rowData=>{
          // console.log('rowData',rowData);
-         return <div style={{border:'2px solid yellow' ,width:'120px',height:"20px"}}> {rowData.birthCity}</div>
-    } ,
-          
-
-        lookup: { 34: 'تهران', 63: 'ازگیل' },
-      },
+      //   return <div style={{border:'2px solid yellow' ,width:'120px',height:"20px"}}> {rowData.birthCity}</div>
+    } , 
+       lookup: { 34: 'تهران', 63: 'گرمسار' },
+      }, */
     ],
     data: [
-      { name: 'محمد', surname: 'حسینی', birthYear: 1373, birthCity: 63 },
-      {
-        name: 'زری',
-        surname: 'جوادی',
-        birthYear: 1395,
-        birthCity: 34,
+      { id:"12ty14",
+        name: 'لباس',
+       properties: 'پیراهن بلند کتان سایز لارج',
+        price: "125000t", 
+        amount: 63 ,
+     },
+      { id:"wd12we",
+        name: 'کفش',
+        properties: 'کفش ملی بادوام و راحت',
+        price: "12000t",
+        amount: 30,
       },
-      {
-        name: 'حسن',
-        surname: 'یوسفی',
-        birthYear: 2015,
-        birthCity: 34,
+      { id:"23er43",
+        name: 'کلاه',
+        properties: 'کلاه حصیری سبک سایز بجگانه',
+        price: "25000t",
+        amount: 34,
       },
     ],
   });
@@ -68,7 +104,7 @@ useEffect(() => {
     setLoading(false);
     let errChance = Math.floor(Math.random()*100);
     console.log(errChance);
-    if (errChance>=1)setError(true);
+    if (errChance>=5525)setError(true);
   }, 100);
 }, )
 
@@ -78,22 +114,42 @@ useEffect(() => {
     <React.Fragment>
       {error&&<Modal title="مشکلی پیش آمده" message="ممکن است اشکال از اتصال اینترنت و یا سرور باشد"/>}
       {error&&<button onClick={(e)=>{
-console.log(e);
+             console.log(e);
         setTimeout(() => {
           setError(false);
         }, 1000);
       }}>تلاش مجدد </button>}
       {!error&&loading&& <div className={css.SpinnerContainer}>  <Spinner/> </div> }
+   
+   
+   
    {!error&&!loading&& <MaterialTable
+   classes={{
+    paginationRoot:css.paginationRoot,
+    paginationToolbar:css.paginationToolbar,
+    paginationCaption:css.paginationCaption,
+    paginationSelectRoot:css.paginationSelectRoot
+
+  }
+   }
     components = {{
         Pagination: props => (
           <TablePagination {...props} style={{ direction: "ltr" }} />
+        ),
+        hugyf:props=>(
+          <h3 {...props}> erfv</h3>
         )
       }}
       title="لیست محصولات"
       columns={state.columns}
       data={state.data}
-      onRowClick={((evt, selectedRow) => setSelectedRow(selectedRow.tableData.id))}
+      onRowClick={((evt, selectedRow) =>{
+        //alert(selectedRow.tableData.id)
+
+        console.log(selectedRow);
+return    setSelectedRow(selectedRow.tableData.id)
+      } 
+      )}
 
       options={{
 
@@ -103,9 +159,13 @@ console.log(e);
         actionsColumnIndex: -1,
          */
 
+        searchFieldStyle:{
+          backgroundColor:"pink"
+        },
         headerStyle: {
-          backgroundColor: '#01579b',
-          color: '#FFF'
+          backgroundColor: 'blue',
+          color: '#FFF',
+          textAlign:"center"
         },
 
             /*       
@@ -116,25 +176,28 @@ console.log(e);
           
 
           rowStyle: rowData => ({
-            color: (selectedRow === rowData.tableData.id) ? '#ff2500' : '#de1000',
-            backgroundColor: (selectedRow === rowData.tableData.id) ? '#00f000' : '#00c000',
+            color: (selectedRow === rowData.tableData.id) ? '#fff' : '#333',
+            backgroundColor: (selectedRow === rowData.tableData.id) ? '#aaa' : '#eee',
+            textAlign:"center",
+            border:"0px solid red"
+           
           })
     
     
     }}
 
     actions={[
-        {
+      /*   {
           icon: 'save',
           tooltip: 'Save User',
           onClick: (event, rowData) => alert("You saved " + rowData.name)
-        },
-        rowData => ({
+        }, */
+      /*   rowData => ({
           icon: 'delete',
           tooltip: 'Delete User',
           onClick: (event, rowData) => alert("You want to delete " +rowData.name),
           disabled: rowData.birthYear < 2000
-        })
+        }) */
       ]}
 
 
@@ -142,7 +205,7 @@ console.log(e);
 
        editable={{
 //   Icon Plus ke bala safhe hastesh ro mighouyad
-       onRowAdd: (newData) =>
+/*        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
@@ -152,7 +215,7 @@ console.log(e);
                 return { ...prevState, data };
               });
             }, 600);
-          }), 
+          }),  */
 
 
 
@@ -177,7 +240,7 @@ console.log(e);
 
 
 
-        onRowDelete: (oldData) =>
+      /*   onRowDelete: (oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
@@ -187,7 +250,7 @@ console.log(e);
                 return { ...prevState, data };
               });
             }, 600);
-          }),
+          }), */
       }}//end of editable  
 
     />

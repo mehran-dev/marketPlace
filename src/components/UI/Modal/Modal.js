@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -8,14 +8,14 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: '1px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    textAlign:'center'
+    textAlign: 'center'
   },
 }));
 
@@ -32,31 +32,38 @@ export default function TransitionsModal(props) {
   const handleClose = () => {
     setOpen(false);
     //for controling Modal from the outSide 
-//check if modal is send And if its a function or not 
-    if (props.modalClosed &&(typeof props.modalClosed ==="function"))
-    props.modalClosed()
+    //check if modal is send And if its a function or not 
+    if (props.modalClosed && (typeof props.modalClosed === "function"))
+      props.modalClosed()
   };
 
   return (
-  
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-    <h2 id="transition-modal-title">{props.title}</h2>
-            <p id="transition-modal-description">{props.message}</p>
-          </div>
-        </Fade>
-      </Modal>
-);
+
+    <Modal
+      /*    
+      on nobile it is not okey 
+      style={{
+           overflow: "hidden",
+           maxHeight: "70vh",
+           fontSize: "90%"
+         }} */
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={open}>
+        <div className={classes.paper}>
+          <h2 id="transition-modal-title">{props.title}</h2>
+          <p id="transition-modal-description">{props.message}</p>
+        </div>
+      </Fade>
+    </Modal>
+  );
 }
