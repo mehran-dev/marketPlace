@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useRef } from "react";
 import css from "./SelectProduct.module.css";
 import Button from "../CustomButtons/Button";
 import TextField from "@material-ui/core/TextField";
@@ -24,8 +24,6 @@ export default function SelectProduct(props) {
 
 
 
-    useEffect(() => {
-    });
 
     const inputRef = useRef(document.getElementById("userProduct"));
     const titleRef = useRef(document.getElementById("newProductLabel"));
@@ -41,10 +39,11 @@ export default function SelectProduct(props) {
         if (newUserProduct.trim() === "") {
 
             //style to alert User 
-            inputRef.current.classList.add(css.bgRedAlert)
-            titleRef.current.classList.add(css.titleAlert)
+            inputRef.current.classList.add(css.bgRedAlert);
+            titleRef.current.classList.add(css.titleAlert);
 
-            inputRef.current.focus()
+
+
         } else {
             setLoading(true);
             // send http request to see if product already existed or not !!!
@@ -64,6 +63,7 @@ export default function SelectProduct(props) {
     return (<div className={css.AddProduct} >
         <h5 id="newProductLabel" ref={titleRef} className={css.title} > محصول مورد نظر خود را وارد کنید. </h5>
         <Autocomplete ref={inputRef}
+
             fullWidth
             classes={
                 {
@@ -150,17 +150,19 @@ export default function SelectProduct(props) {
                 }
             }
             renderInput={
-                (params) => (<
-                    TextField InputProps={
-                        {
-                            className: css.inputColor,
-                        }
-                    } {...params}
-                    label="محصول جدید را وارد کنید"
+                (params) => (<TextField
+                    classes={{
+                        root: css.textFieldRoot
+                    }}
+                    InputProps={{
+                        className: css.inputColor,
+                    }} {...params}
+                    label="نام محصول جدید"
                     variant="outlined" />
                 )
             }
-            autoHighlight
+/*             size="large"
+ */            autoHighlight
             selectOnFocus
             handleHomeEndKeys
             filterOptions={

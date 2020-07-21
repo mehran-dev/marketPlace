@@ -7,6 +7,7 @@ import TableInput from "../TableInput/TableInput";
 import Modal from '../../components/UI/Modal/Modal';
 import DialogeModal from '../../components/UI/DialogeModal/DialogeModal';
 import SubmitProductAddControl from './submitProductAddControl/submitProductAddControl';
+import { string } from "prop-types";
 
 
 
@@ -37,14 +38,20 @@ export default class SubmitProduct extends Component {
         "635g",
         "965g",
 
+      ],
+      "رنگ": [
+        "قرمز",
+        "آبی",
+        "سبز",
+        "صورتی",
       ]
     },
     options: {},
     allValues: {
-      /* "id1":"kakhall docxtor",
-      "id2":"4w5t",
-      "id3":"45",
-      "id4":"45y45y45", */
+      /*   "id1":"kakhall docxtor",
+         "id2":"4w5t",
+         "id3":"45",
+         "id4":"45y45y45", */
     }
     ,
     showNewRowModal: false
@@ -67,12 +74,15 @@ export default class SubmitProduct extends Component {
       hash = (hash << 5) - hash + char;
       hash = hash & hash;
     }
-
+    //I changed my mind so not to hash 
+    //return string;
     return hash;
   };
 
 
   getValueHandler = (inputId, inputVal) => {
+
+    console.log("inputId.split('__')[1]", inputId.split("__")[1]);
     //console.log("id,val",inputId,inputVal);
     //console.log("stateOld:",this.state.allValues);
 
@@ -94,18 +104,32 @@ export default class SubmitProduct extends Component {
 
 
   }
+
+
   modalClosedHandler = () => {
     this.setState({
       showNewRowModal: false
     });
   }
 
+  deleteUserAddedColumnHandler = (columnToDelete) => {
+    //now columnToDelete is an object holding all information 
+    console.log("delete", columnToDelete);
+    const filteredColumns = this.state.columns.filter(colObject => {
+      return colObject !== columnToDelete
+    })
 
+
+    this.setState({
+      columns: filteredColumns
+    })
+
+  }
 
   addCol = (colName) => {
     let isDuplicate = false;
     let duplication = this.state.columns.map((col) => {
-      return col.trim() === colName.trim();
+      return col.name.trim() === colName.trim();
     });
     duplication.forEach((element) => {
       if (element === true) {
@@ -134,10 +158,20 @@ export default class SubmitProduct extends Component {
     }
     const oldColumns = [...this.state.columns];
     //splice doesnt return new array !!!
-    oldColumns.splice(-3, 0, colName);
+    // oldColumns.splice(-3, 0, colName);
+    //oldColumns.push({ name: colName.trim(), isDefault: false, isNew: true })
+    oldColumns.splice(-3, 0, { name: colName.trim(), isDefault: false, isNew: true })
+
+    //console.log("old", oldColumns);
+    //console.log("new", newColumns);
+
+
+    //because push doesnt return new object 
+    const newColumns = [...oldColumns]
+
     this.setState({
       //splice doesnt return new array !!!
-      columns: oldColumns, //newColumns
+      columns: newColumns, //newColumns
       newColumnAdding: false,
       newColumnAddedConfirm: true,
     });
@@ -166,7 +200,7 @@ export default class SubmitProduct extends Component {
     this.state.columns.map((c, index) => {
       if (
         document
-          .getElementById(lastRow + "__" + this.stringToHash(c))
+          .getElementById(lastRow + "__" + this.stringToHash(c.name))
           .value.trim() !== ""
       ) {
         NeedTobeAdded = true;
@@ -186,6 +220,7 @@ export default class SubmitProduct extends Component {
     }
 
   };
+
 
   showAddNewColumnHandler = () => {
     //alert("Inrered In showAddNewColumnHandler")
@@ -233,7 +268,23 @@ export default class SubmitProduct extends Component {
 
     let rows = [];
     const theads = this.state.columns.map((h) => {
-      return <th key={h}>{h}</th>;
+
+      let deleteColumnFunc = null;//() => { }
+      if (h.isNew) {
+        deleteColumnFunc = () => this.deleteUserAddedColumnHandler(h)
+      }
+      return <th
+
+        className={h.isNew ? css.hoverDelete : css.noDelete}
+
+        onClick={deleteColumnFunc}
+
+        key={h.name}
+      >
+
+        {h.name}
+
+      </th>;
     });
 
     for (let j = 1; j <= this.state.rows; j++) {
@@ -246,12 +297,15 @@ export default class SubmitProduct extends Component {
           >
             <TableInput
               className={css.bgGrey}
-              placeHolder={col}
-              id={j + "__" + this.stringToHash(col)}
-              options={this.state.allOptions[col]}
-              value={this.state.allValues[j + "__" + this.stringToHash(col)] ? this.state.allValues[j + "__" + this.stringToHash(col)] : ""}
-              onChange={() => { return 0; }}
+              placeHolder={col.name}
+              id={j + "__" + this.stringToHash(col.name)}
+              options={this.state.allOptions[col.name]}
+              value={this.state.allValues[j + "__" + this.stringToHash(col.name)] ? this.state.allValues[j + "__" + this.stringToHash(col.name)] : ""}
+              /* onChange={() => { return 0; }} */
               getValue={(id, val) => this.getValueHandler(id, val)}
+              data_columnname={col.name}
+              data_product_row={j}
+              data_column_isnew={col.isNew}
             />
           </td>
         );
@@ -266,42 +320,60 @@ export default class SubmitProduct extends Component {
         {newColumnNameRepetitiveModal}
 
         <div className={css.containerNoScroll}>
+
+
           <span className={css.labelStyle}>
-            محصول انتخابی: :{this.props.userEditingProduct}
+            محصول انتخابی:
+            <span>
+              {this.props.userEditingProduct}
+            </span>
           </span>
+
+
+
           <span className={css.labelStyle}>
-            فروشنده :{this.props.sellerName}
+            فروشنده :
+          <span>
+              {this.props.sellerName}
+            </span>
+
           </span>
           <div className={css.container}>
+            <table>
+              <thead>
+                <tr>{theads}</tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => {
+                  return <tr key={Math.random() + r + Math.floor(Math.random(r))}>{r}</tr>;
+                })}
+                <tr>
+                  <td>
+                    <button className={css.addRowBtn} onClick={this.addNewRow}>سطر جدید</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-            <div className="container">
-
-
-              <table>
-                <thead>
-                  <tr>{theads}</tr>
-                </thead>
-                <tbody>
-                  {rows.map((r) => {
-                    return <tr key={Math.random() + r + Math.floor(Math.random(r))}>{r}</tr>;
-                  })}
-                  <tr>
-                    <td>
-                      <button className={css.addRowBtn} onClick={this.addNewRow}>سطر جدید</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
+
+
+
           <Button className={css.buttonStyle}
             onClick={() => {
-              console.log(this.state.allValues);
+              //send data to backend for new products 
+
+
+
             }}
             color="success"> ذخیره </Button>
+
+
+
+
           <Button className={css.buttonStyle}
             onClick={() => {
-
+              // All Relative states should be deleted 
               //  alert("انصراف پروسه اش طی شود ... آیا کانفیرم می خواهد و یا خیر ");
               this.props.submitCanceled();
             }
@@ -317,7 +389,7 @@ export default class SubmitProduct extends Component {
           /* showAddNewColumn={this.showAddNewColumnHandler} */
           showAddNewColumnHandler={this.showAddNewColumnHandler}
           addCol={this.addCol}
-          nwColInput={this.ref}
+          newColInput={this.ref}
         />
       </React.Fragment >
     );

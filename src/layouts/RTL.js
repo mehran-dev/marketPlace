@@ -81,7 +81,7 @@ export default function RTL({ ...rest }) {
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
-        suppressScrollX: true,
+        suppressScrollX: false,
         suppressScrollY: false
       });
       document.body.style.overflow = "hidden";
@@ -99,7 +99,7 @@ export default function RTL({ ...rest }) {
 
 
 
-   
+
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
@@ -125,8 +125,8 @@ export default function RTL({ ...rest }) {
             <div className={classes.container}>{switchRoutes}</div>
           </div>
         ) : (
-          <div className={classes.map}>{switchRoutes}</div>
-        )}
+            <div className={classes.map}>{switchRoutes}</div>
+          )}
         {getRoute() ? <Footer /> : null}
         <FixedPlugin
           handleImageClick={handleImageClick}
@@ -139,6 +139,6 @@ export default function RTL({ ...rest }) {
         />
       </div>
     </div>
-   
+
   );
 }
